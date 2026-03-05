@@ -1,13 +1,17 @@
 ﻿namespace Domain.Entities;
 public class BankAccount
 {
-    private BankAccount() { }
-
-    public BankAccount(string name)
+    public BankAccount(Guid id, string name, decimal balance)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Name = name ?? throw new ArgumentNullException(nameof(name));
-        Balance = 0m;
+        Balance = balance;
+    }
+
+    public BankAccount(string name, decimal balance)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Balance = balance;
     }
 
     public Guid Id { get; private set; }

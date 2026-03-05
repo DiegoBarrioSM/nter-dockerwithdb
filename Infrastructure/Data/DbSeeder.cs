@@ -10,7 +10,7 @@ public static class DbSeeder
         if (await context.BankAccounts.AnyAsync())
             return;
 
-        var account = new BankAccount("Test Account 1");
+        var account = new BankAccount(new Guid("11111111-1111-1111-1111-111111111111"), "Test Account 1", 0);
 
         context.BankAccounts.Add(account);
 

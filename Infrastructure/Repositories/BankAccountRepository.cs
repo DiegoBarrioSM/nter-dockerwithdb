@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.IRepositories;
 using Infrastructure.Data;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Insfrastructure.Repositories;
 
@@ -22,9 +22,11 @@ public class BankAccountRepository : IBankAccountRepository
             .FirstAsync(x => x.Id == id);
     }
 
-    public void SaveBankAccount(BankAccount account)
+    public async Task<Guid> AddBankAccountAsync(BankAccount account)
     {
-        _dbContext.BankAccounts.Add(account);
-        _dbContext.SaveChanges();
+        await _dbContext.BankAccounts.AddAsync(account);
+        await _dbContext.SaveChangesAsync();
+
+        return account.Id;
     }
 }

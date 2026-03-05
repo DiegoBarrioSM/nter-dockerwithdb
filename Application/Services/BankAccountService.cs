@@ -1,5 +1,6 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
+using Domain.Entities;
 using Domain.IRepositories;
 
 public class BankAccountService : IBankAccountService
@@ -34,5 +35,14 @@ public class BankAccountService : IBankAccountService
                 Amount = x.Amount
             })],
         };
+    }
+
+    public async Task<Guid?> AddAsync(BankAccountAddDto dto)
+    {
+        var newBankAccount = new BankAccount(dto.Name, dto.Balance);
+
+        var id = await _repository.AddBankAccountAsync(newBankAccount);
+
+        return id;
     }
 }

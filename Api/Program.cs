@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Demo API",
         Version = "v1",
-        Description = "API demo con Clean Architecture y Postgres en Docker"
+        Description = "API demo with Clean Architecture y Postgres en Docker"
     });
 });
 

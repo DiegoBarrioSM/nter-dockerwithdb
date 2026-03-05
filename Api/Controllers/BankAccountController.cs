@@ -20,4 +20,12 @@ public class BankAccountController : Controller
         if (account == null) return NotFound();
         return Ok(account);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<Guid>> Add(BankAccountAddDto dto)
+    {
+        var id = await _bankAccountService.AddAsync(dto);
+        if (id == null) return BadRequest();
+        return Ok(id);
+    }
 }
