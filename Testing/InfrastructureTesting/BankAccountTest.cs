@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Insfrastructure.Repositories;
+using Infrastructure.Repositories;
 
 namespace Testing.InfrastructureTesting;
 

@@ -1,0 +1,31 @@
+﻿services:
+  api:
+    build:
+      context: ..          # apunta a la carpeta Api donde está tu Dockerfile
+      dockerfile: Api/Dockerfile
+    container_name: api
+    ports:
+      - "8080:8080"       # HTTP
+      - "8081:8081"       # HTTPS
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      DOTNET_RUNNING_IN_CONTAINER: "true"
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=demo;Username=postgres;Password=demo"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

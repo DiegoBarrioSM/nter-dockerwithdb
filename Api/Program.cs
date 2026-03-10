@@ -1,7 +1,7 @@
 using Application.Interfaces;
 using Domain.IRepositories;
 using Infrastructure.Data;
-using Insfrastructure.Repositories;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 

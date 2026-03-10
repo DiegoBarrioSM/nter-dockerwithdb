@@ -3,7 +3,7 @@ using Domain.IRepositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Insfrastructure.Repositories;
+namespace Infrastructure.Repositories;
 
 public class BankAccountRepository : IBankAccountRepository
 {
