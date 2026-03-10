@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 public class BankAccountController : Controller
 {
     private readonly IBankAccountService _bankAccountService;
@@ -22,10 +24,10 @@ public class BankAccountController : Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult<Guid>> Add(BankAccountAddDto dto)
+    public async Task<ActionResult<Guid>> Add([FromBody]BankAccountAddDto dto)
     {
         var id = await _bankAccountService.AddAsync(dto);
         if (id == null) return BadRequest();
-        return Ok(id);
+        return CreatedAtAction(nameof(Get), new { id }, id);
     }
 }
