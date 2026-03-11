@@ -22,6 +22,11 @@ public class BankAccountRepository : IBankAccountRepository
             .FirstAsync(x => x.Id == id);
     }
 
+    public async Task<List<BankAccount>> GetAllAsync()
+    {
+        return await _dbContext.BankAccounts.ToListAsync();
+    }
+
     public async Task<Guid> AddBankAccountAsync(BankAccount account)
     {
         await _dbContext.BankAccounts.AddAsync(account);

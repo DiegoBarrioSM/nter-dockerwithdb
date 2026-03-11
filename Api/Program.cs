@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Demo API",
         Version = "v1",
-        Description = "API demo with Clean Architecture y Postgres en Docker"
+        Description = "API demo with Clean Architecture and Postgres in Docker"
     });
 });
 
@@ -30,9 +30,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 builder.Services.AddScoped<IBankAccountService, BankAccountService>();
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
-// Swagger middleware
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -47,10 +54,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
-}
+app.MapHealthChecks("/health");
 
 app.Run();

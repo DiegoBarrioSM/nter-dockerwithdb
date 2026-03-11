@@ -23,6 +23,13 @@ public class BankAccountController : Controller
         return Ok(account);
     }
 
+    [HttpGet]
+    public async Task<ActionResult<List<BankAccountDto>>> GetAll()
+    {
+        var accounts = await _bankAccountService.GetAllAsync();
+        return Ok(accounts);
+    }
+
     [HttpPost]
     public async Task<ActionResult<Guid>> Add([FromBody]BankAccountAddDto dto)
     {

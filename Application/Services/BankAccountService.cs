@@ -37,6 +37,18 @@ public class BankAccountService : IBankAccountService
         };
     }
 
+    public async Task<List<BankAccountDto>> GetAllAsync()
+    {
+        var accounts = await _repository.GetAllAsync();
+
+        return [.. accounts.Select(account => new BankAccountDto
+        {
+            Id = account.Id,
+            Name = account.Name,
+            Balance = account.Balance
+        })];
+    }
+
     public async Task<Guid?> AddAsync(BankAccountAddDto dto)
     {
         var newBankAccount = new BankAccount(dto.Name, dto.Balance);
