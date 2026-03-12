@@ -6,8 +6,6 @@ public class PostgresTestFixture : IAsyncLifetime
 {
     private readonly PostgreSqlContainer _container;
 
-    public string ConnectionString => _container.GetConnectionString();
-
     public DbContextOptions<AppDbContext> DbOptions { get; private set; }
 
     public PostgresTestFixture()

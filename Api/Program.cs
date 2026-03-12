@@ -4,8 +4,11 @@ using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Data.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 // Add services
 builder.Services.AddControllers();
@@ -22,9 +25,11 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Docker DbContext
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Aspire DbContext
+builder.AddNpgsqlDbContext<AppDbContext>("DefaultConnection");
 
 // DI for repository & service
 builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
