@@ -10,22 +10,27 @@
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
       DOTNET_RUNNING_IN_CONTAINER: "true"
-      ASPNETCORE_ENVIRONMENT: "Development"
-      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=demo;Username=postgres;Password=demo"
+      ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:15
     container_name: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: demo
-      POSTGRES_DB: demo
+      POSTGRES_DB: dbDocker
+      POSTGRES_USER: userDocker
+      POSTGRES_PASSWORD: postgres      
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_docker:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U userDocker -d dbDocker"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
-  postgres_data:
+  postgres_data_docker:
